@@ -39,7 +39,8 @@ window.onload=function(){
 
 function getCurrentShowTimeSeconds(){
     var curTime=new Date()
-    var ret=endTime.getTime()-curTime.getTime()
+    // var ret=endTime.getTime()-curTime.getTime()
+    var ret=curTime.getTime()
     ret=Math.round(ret/1000)
     return ret>=0?ret:0
 }
@@ -47,32 +48,36 @@ function getCurrentShowTimeSeconds(){
 function update(){
     var nextShowTimeSeconds=getCurrentShowTimeSeconds();
 
-    var nextHours=parseInt(nextShowTimeSeconds/3600)
-    var nextMinutes=parseInt((nextShowTimeSeconds-nextHours*3600)/60)
+    var nextHours=Math.abs(parseInt((nextShowTimeSeconds%(24*60*60))/3600)-24)
+    var nextMinutes=parseInt((nextShowTimeSeconds%3600)/60)
     var nextSeconds=nextShowTimeSeconds%60
 
-    var curHours=parseInt(curShowTimeSeconds/3600)
-    var curMinutes=parseInt((curShowTimeSeconds-curHours*3600)/60)
+    var curHours=Math.abs(parseInt((nextShowTimeSeconds%(24*60*60))/3600)-24)
+    var curMinutes=parseInt((nextShowTimeSeconds%3600)/60)
     var curSeconds=curShowTimeSeconds%60
+
+    console.log(nextHours)
+    console.log(curHours)
+    console.log('')
 
     if(nextSeconds!=curSeconds){
         if(parseInt(curHours/10)!=parseInt(nextHours/10)){
             addBalls(MARGIN_LEFT+0,MARGIN_TOP,parseInt(curHours/10))
         }
         if(parseInt(curHours%10)!=parseInt(nextHours%10)){
-            addBalls(MARGIN_LEFT+15*(RADIUS+1),MARGIN_TOP,parseInt(curHours/10))
+            addBalls(MARGIN_LEFT+15*(RADIUS+1),MARGIN_TOP,parseInt(curHours%10))
         }
         if(parseInt(curMinutes/10)!=parseInt(nextMinutes/10)){
-            addBalls(MARGIN_LEFT+39*(RADIUS+1),MARGIN_TOP,parseInt(curHours/10))
+            addBalls(MARGIN_LEFT+39*(RADIUS+1),MARGIN_TOP,parseInt(curMinutes/10))
         }
         if(parseInt(curMinutes%10)!=parseInt(nextMinutes%10)){
-            addBalls(MARGIN_LEFT+54*(RADIUS+1),MARGIN_TOP,parseInt(curHours/10))
+            addBalls(MARGIN_LEFT+54*(RADIUS+1),MARGIN_TOP,parseInt(curMinutes%10))
         }
         if(parseInt(curSeconds/10)!=parseInt(nextSeconds/10)){
-            addBalls(MARGIN_LEFT+78*(RADIUS+1),MARGIN_TOP,parseInt(curHours/10))
+            addBalls(MARGIN_LEFT+78*(RADIUS+1),MARGIN_TOP,parseInt(curSeconds/10))
         }
         if(parseInt(curSeconds%10)!=parseInt(nextSeconds%10)){
-            addBalls(MARGIN_LEFT+93*(RADIUS+1),MARGIN_TOP,parseInt(curHours/10))
+            addBalls(MARGIN_LEFT+93*(RADIUS+1),MARGIN_TOP,parseInt(curSeconds%10))
         }
         curShowTimeSeconds=nextShowTimeSeconds
     }
@@ -126,8 +131,8 @@ function addBalls(x,y,num){
 function render(cxt){
     cxt.clearRect(0,0,cxt.canvas.width,cxt.canvas.height)
 
-    var hours=parseInt(curShowTimeSeconds/3600)
-    var minutes=parseInt((curShowTimeSeconds-hours*3600)/60)
+    var hours=Math.abs(parseInt((curShowTimeSeconds%(24*60*60))/3600)-24)
+    var minutes=parseInt((curShowTimeSeconds%3600)/60)
     var seconds=curShowTimeSeconds%60
 
     renderDigit(MARGIN_LEFT,MARGIN_TOP,parseInt(hours/10),cxt)
