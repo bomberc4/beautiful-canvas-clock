@@ -56,10 +56,6 @@ function update(){
     var curMinutes=parseInt((nextShowTimeSeconds%3600)/60)
     var curSeconds=curShowTimeSeconds%60
 
-    console.log(nextHours)
-    console.log(curHours)
-    console.log('')
-
     if(nextSeconds!=curSeconds){
         if(parseInt(curHours/10)!=parseInt(nextHours/10)){
             addBalls(MARGIN_LEFT+0,MARGIN_TOP,parseInt(curHours/10))
