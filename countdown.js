@@ -99,9 +99,6 @@ function updateBalls(){
         }
     }
 
-    while(balls.length>Math.min(300,cnt)){
-        balls.pop()
-    }
 }
 
 function addBalls(x,y,num){
