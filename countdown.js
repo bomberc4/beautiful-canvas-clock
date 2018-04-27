@@ -94,9 +94,13 @@ function updateBalls(){
 
     var cnt=0
     for(var i=0;i<balls.length;i++){
-        if(balls[i].x+RADIUS>0&& balls[i]-RADIUS<WINDOW_WIDTH){
+        if(balls[i].x+RADIUS>0&& balls[i].x-RADIUS<WINDOW_WIDTH){
             balls[cnt++]=balls[i]
         }
+    }
+
+    while(balls.length>Math.min(300,cnt)){
+        balls.pop()
     }
 
 }
