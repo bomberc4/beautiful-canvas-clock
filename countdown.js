@@ -48,12 +48,12 @@ function getCurrentShowTimeSeconds(){
 function update(){
     var nextShowTimeSeconds=getCurrentShowTimeSeconds();
 
-    var nextHours=Math.abs(parseInt((nextShowTimeSeconds%(24*60*60))/3600)-24)
+    var nextHours=(parseInt((nextShowTimeSeconds%(24*60*60))/3600)+8)%24
     var nextMinutes=parseInt((nextShowTimeSeconds%3600)/60)
     var nextSeconds=nextShowTimeSeconds%60
 
-    var curHours=Math.abs(parseInt((nextShowTimeSeconds%(24*60*60))/3600)-24)
-    var curMinutes=parseInt((nextShowTimeSeconds%3600)/60)
+    var curHours=(parseInt((curShowTimeSeconds%(24*60*60))/3600)+8)%24
+    var curMinutes=parseInt((curShowTimeSeconds%3600)/60)
     var curSeconds=curShowTimeSeconds%60
 
     if(nextSeconds!=curSeconds){
@@ -127,7 +127,7 @@ function addBalls(x,y,num){
 function render(cxt){
     cxt.clearRect(0,0,cxt.canvas.width,cxt.canvas.height)
 
-    var hours=Math.abs(parseInt((curShowTimeSeconds%(24*60*60))/3600)-24)
+    var hours=(parseInt((curShowTimeSeconds%(24*60*60))/3600)+8)%24
     var minutes=parseInt((curShowTimeSeconds%3600)/60)
     var seconds=curShowTimeSeconds%60
 
